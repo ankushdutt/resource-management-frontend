@@ -1,7 +1,7 @@
-import Employee from "./components/Employee";
-import Inventory from "./components/Inventory";
-import Exam from "./components/Exam";
-import LectureHall from "./components/LectureHall";
+import Employee from "./modules/Employee";
+import Inventory from "./modules/Inventory";
+import Exam from "./modules/Exam";
+import LectureHall from "./modules/LectureHall";
 
 function App() {
   return (
