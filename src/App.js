@@ -5,6 +5,7 @@ import Inventory from "./modules/Inventory";
 import Exam from "./modules/Exam";
 import LectureHall from "./modules/LectureHall";
 import Home from "./Home";
+import AvailableLT from "./modules/LectureHall/components/AvailableLT";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route path="/">
           <Home />
+        </Route>
+        <Route path="/lecturehall/availablelt">
+          <AvailableLT />
         </Route>
       </Switch>
     </Router>
