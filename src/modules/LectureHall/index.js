@@ -1,12 +1,20 @@
-import { Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import SearchLH from "./components/SearchLH";
+import AllocatedLH from "./components/AllocatedLH";
+import App from "./App";
 
 export default function index() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      Hello from Lecture Hall. Edit this in src/modules/LectureHall/index.js
-      <Link className="text-blue-500 mt-4" to="/">
-        Back
-      </Link>
-    </div>
+    <Switch>
+      <Route path="/lecturehall/search">
+        <SearchLH />
+      </Route>
+      <Route path="/lecturehall/allocated">
+        <AllocatedLH />
+      </Route>
+      <Route path="/lecturehall">
+        <App />
+      </Route>
+    </Switch>
   );
 }
