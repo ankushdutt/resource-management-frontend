@@ -1,20 +1,10 @@
-import { Switch, Route } from "react-router-dom";
-import ShowAllLH from "./components/ShowAllLH";
-import AllocatedLH from "./components/AllocatedLH";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 
 export default function index() {
   return (
-    <Switch>
-      <Route path="/lecturehall/all">
-        <ShowAllLH />
-      </Route>
-      <Route path="/lecturehall/allocated">
-        <AllocatedLH />
-      </Route>
-      <Route path="/lecturehall">
-        <App />
-      </Route>
-    </Switch>
+    <BrowserRouter>
+     <App/>
+    </BrowserRouter>
   );
 }
