@@ -29,12 +29,12 @@ export default function AllocatedLH() {
       {allocatedLH.map((lh) => (
         <div key={lh}>
           <Lecturehall id={lh} />
-          <button
+          {/* <button
             className="p-2 border-2 rounded text-red border-red hover:text-red-400 mb-2"
             onClick={() => deleteHandler(lh)}
           >
             Remove
-          </button>
+          </button> */}
         </div>
       ))}
     </div>
