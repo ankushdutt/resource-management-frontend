@@ -2,12 +2,6 @@
       box-sizing: border-box;
     }
     
-    body {
-      font-family: sans-serif;
-      margin: 3rem;
-      background-color: #fbfcfd;
-    }
-    
     h1, h2 {
       color: #333333;
     }

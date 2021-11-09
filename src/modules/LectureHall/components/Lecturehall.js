@@ -1,27 +1,10 @@
-import { useState } from "react";
-import Modal from "./Modal";
-import Backdrop from "./Backdrop";
-import "./Lecturehall.css";
-
 const Lecturehall = (props) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  function deleteHandler() {
-    setModalIsOpen(true);
-  } 
-
-  function setModalHandler() {
-    setModalIsOpen(false);
-  }
 
   return (
-    <div className='card'>
+    <div >
       <h2>Lecture Hall{props.id}</h2>
-      <div className='actions'>
-        <button className='btn' onClick={deleteHandler}>Confirm</button>
-      </div>
-      {modalIsOpen && <Modal onCancel={setModalHandler} onConfirm={setModalHandler}/>}
-      {modalIsOpen && <Backdrop onClick={setModalHandler}/>}
+      <p>Max.Capacity: 200</p>
+      <p>Time Slot: 9:00-10:00AM</p>
     </div>
   );
 }
