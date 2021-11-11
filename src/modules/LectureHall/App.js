@@ -1,16 +1,16 @@
-import { Route, Switch, Redirect } from "react-router";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { useState } from "react";
 import AllocatedLH from "./components/AllocatedLH";
 import AvailableLH from "./components/AvailableLH";
-import MainNavigation from "./components/MainNavigation";
 import ShowAllLH from "./components/ShowAllLH";
 import Login from "./components/Login";
+import Navbar from "./components/Navbar";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <div>
-      {isLoggedIn && <MainNavigation setIsLoggedIn={setIsLoggedIn} />}
+      {isLoggedIn && <Navbar setIsLoggedIn={setIsLoggedIn} />}
       <Switch>
         <Route exact path="/lecturehall">
           {isLoggedIn ? (
