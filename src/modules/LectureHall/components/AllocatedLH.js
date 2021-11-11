@@ -36,18 +36,20 @@ export default function AllocatedLH() {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="py-5">Lecture Halls Allocated to you:-</h1>
       {allocatedLH.map((lh) => (
-        <div key={lh} className='card'>
+        <div key={lh} className="card">
           <Lecturehall id={lh} />
-          <div className='actions'>
-          <button
-            className="btn"
-            onClick={() => setModalIsOpen(true)}
-          >
-            Remove
-          </button>
+          <div className="actions">
+            <button className="btn" onClick={() => setModalIsOpen(true)}>
+              Remove
+            </button>
           </div>
-          {modalIsOpen && <Modal onCancel={setModalHandler} onConfirm={()=>deleteHandler(lh)}/>}
-          {modalIsOpen && <Backdrop onClick={setModalHandler}/>}
+          {modalIsOpen && (
+            <Modal
+              onCancel={setModalHandler}
+              onConfirm={() => deleteHandler(lh)}
+            />
+          )}
+          {modalIsOpen && <Backdrop onClick={setModalHandler} />}
         </div>
       ))}
     </div>
