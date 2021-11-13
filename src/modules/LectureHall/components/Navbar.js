@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useState } from "react";
@@ -22,16 +22,25 @@ export default function Navbar({ setIsLoggedIn }) {
             <div className="relative flex items-center justify-between h-16">
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <p className="text-white px-3 py-2 rounded-md font-bold">
+                  <p className="hidden sm:block text-white px-3 py-2 rounded-md font-bold">
                     Lecture Hall
                   </p>
                 </div>
-                <div className="hidden sm:block sm:ml-6">
+                <div className="sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
                         to={item.href}
+                        onClick={() => {
+                          const current_href = item.href;
+                          setNavigation(
+                            navigation.map((item) => {
+                              item.current = item.href === current_href;
+                              return item;
+                            })
+                          );
+                        }}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
