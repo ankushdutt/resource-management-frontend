@@ -1,5 +1,5 @@
 import { Route, Switch, Redirect } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AllocatedLH from "./components/AllocatedLH";
 import AvailableLH from "./components/AvailableLH";
 import ShowAllLH from "./components/ShowAllLH";
@@ -8,6 +8,13 @@ import Navbar from "./components/Navbar";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("isLoggedIn") === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <div>
       {isLoggedIn && <Navbar setIsLoggedIn={setIsLoggedIn} />}

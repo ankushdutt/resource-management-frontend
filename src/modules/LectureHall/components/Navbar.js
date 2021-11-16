@@ -115,6 +115,7 @@ export default function Navbar({ setIsLoggedIn }) {
                             onClick={(e) => {
                               e.preventDefault();
                               setIsLoggedIn(false);
+                              localStorage.setItem("isLoggedIn", "false");
                             }}
                           >
                             Sign out

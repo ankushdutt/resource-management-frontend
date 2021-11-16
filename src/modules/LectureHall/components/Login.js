@@ -12,6 +12,7 @@ export default function Login({ setIsLoggedIn }) {
       passInputRef.current.value === "test@lecturehall"
     ) {
       setIsLoggedIn(true);
+      localStorage.setItem("isLoggedIn", "true");
       <Redirect to="/lecturehall/allocated" />;
     }
   }
