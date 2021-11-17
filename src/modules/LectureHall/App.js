@@ -5,6 +5,7 @@ import AvailableLH from "./components/AvailableLH";
 import ShowAllLH from "./components/ShowAllLH";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
+import Profile from "./components/Profile";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,6 +42,9 @@ export default function App() {
         </Route>
         <Route path="/lecturehall/allocated">
           {isLoggedIn ? <AllocatedLH /> : <Redirect to="/lecturehall/login" />}
+        </Route>
+        <Route path="/lecturehall/profile">
+          {isLoggedIn ? <Profile /> : <Redirect to="/lecturehall/login" />}
         </Route>
       </Switch>
     </div>

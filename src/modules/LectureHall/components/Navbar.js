@@ -1,7 +1,7 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -13,6 +13,8 @@ export default function Navbar({ setIsLoggedIn }) {
     { name: "Available", href: "/lecturehall/available", current: false },
     { name: "All LH", href: "/lecturehall/all", current: false },
   ]);
+
+  const history = useHistory();
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -86,6 +88,16 @@ export default function Navbar({ setIsLoggedIn }) {
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              history.push("/lecturehall/profile");
+                              setNavigation(
+                                navigation.map((item) => {
+                                  item.current = false;
+                                  return item;
+                                })
+                              );
+                            }}
                           >
                             Your Profile
                           </a>
