@@ -99,7 +99,7 @@ export default function AllocatedLH() {
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button className="text-indigo-600 mx-6 hover:text-indigo-900" onClick={() => setModalIsOpen(true)}>
-                          Book
+                          Remove
                         </button>
                         {modalIsOpen && (
                           <Modal
