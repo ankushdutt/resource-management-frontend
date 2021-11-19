@@ -10,12 +10,28 @@ export default function AvailableLH() {
   const lecturehall = [
     {
       id: 5,
-      max_capacity: 200,
+      max_capacity: 100,
       permission_req: 'Yes',
       status: 'Available',
       time_from: '3:00PM',
       time_to: '4:00PM',
       },
+    {
+      id: 2,
+      max_capacity: 100,
+      permission_req: 'No',
+      status: 'Available',
+      time_from: '1:00PM',
+      time_to: '2:00PM',
+      },
+    {
+      id: 9,
+      max_capacity: 200,
+      permission_req: 'Yes',
+      status: 'Available',
+      time_from: '5:00PM',
+      time_to: '6:00PM',
+      }
   ]
 
   function submitHandler(e) {
@@ -24,8 +40,7 @@ export default function AvailableLH() {
 
   return (
     <div>
-      <p>Available Lecture Hall List :-</p>
-      <form class="w-full max-w-7xl	mx-16" onSubmit={submitHandler}>
+      <form class="w-full max-w-7xl	mx-16 my-16" onSubmit={submitHandler}>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
