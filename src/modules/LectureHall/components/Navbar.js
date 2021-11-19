@@ -114,6 +114,12 @@ export default function Navbar({ setIsLoggedIn }) {
                             onClick={(e) => {
                               e.preventDefault();
                               history.push("/lecturehall/admin");
+                              setNavigation(
+                                navigation.map((item) => {
+                                  item.current = false;
+                                  return item;
+                                })
+                              );
                             }}
                           >
                             Admin Dashboard
