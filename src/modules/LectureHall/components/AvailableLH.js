@@ -40,7 +40,7 @@ export default function AvailableLH() {
 
   return (
     <div>
-      <form class="w-full max-w-7xl	mx-16 my-16" onSubmit={submitHandler}>
+      <form class="w-full max-w-8xl	mx-16 my-16" onSubmit={submitHandler}>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
