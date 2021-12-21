@@ -5,22 +5,23 @@ export default function Login({ setIsLoggedIn }) {
   const emailInputRef = useRef();
   const passInputRef = useRef();
 
-  function submitHandler(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (
-      emailInputRef.current.value === "test@gmail.com" &&
-      passInputRef.current.value === "test@lecturehall"
-    ) {
-      setIsLoggedIn(true);
-      localStorage.setItem("isLoggedIn", "true");
-      <Redirect to="/lecturehall/allocated" />;
-    }
-  }
+    fetch("https://lecture-hall-backend.herokuapp.com/login", {
+      method: "POST",
+    }).then((data) => {
+      // console.log(data);
+      if (data.status === 200) {
+        setIsLoggedIn(true);
+      }
+    });
+  };
+
   return (
     <div className="w-full max-w-xs m-auto mt-64">
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        onSubmit={submitHandler}
+        onSubmit={handleLogin}
       >
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
