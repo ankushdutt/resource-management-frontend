@@ -9,8 +9,16 @@ export default function Login({ setIsLoggedIn }) {
     e.preventDefault();
     fetch("https://lecture-hall-backend.herokuapp.com/login", {
       method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: emailInputRef.current.value,
+        password: passInputRef.current.value,
+      }),
     }).then((data) => {
-      // console.log(data);
+      console.log(data);
       if (data.status === 200) {
         setIsLoggedIn(true);
       }
