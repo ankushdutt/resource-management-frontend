@@ -1,8 +1,16 @@
 export default function AdminDashboard() {
   return (
     <div className="w-1/3 m-auto p-2">
+      <div className="m-auto">
+        Upload Time Table CSV
+        <br />
+        <input type="file" />
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Allocate from Time Table
+        </button>
+      </div>
       <button
-        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded p-3 m-3"
+        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3"
         onClick={() => {
           console.log("1");
         }}
@@ -10,7 +18,7 @@ export default function AdminDashboard() {
         Add, Update and Delete User Accounts
       </button>
       <button
-        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded p-3 m-3"
+        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3"
         onClick={() => {
           console.log("2");
         }}
@@ -18,7 +26,7 @@ export default function AdminDashboard() {
         Add, Update and Delete Lecture Halls
       </button>
       <button
-        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded p-3 m-3"
+        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3"
         onClick={() => {
           console.log("3");
         }}
@@ -26,7 +34,7 @@ export default function AdminDashboard() {
         Pending Allocation Requests
       </button>
       <button
-        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded p-3 m-3"
+        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3"
         onClick={() => {
           console.log("4");
         }}
