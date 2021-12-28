@@ -1,46 +1,72 @@
 import { useState, useRef } from "react";
+import Modal from "./Modal";
+import Backdrop from "./Backdrop";
+import "./Lecturehall.css";
 
 export default function AvailableLH() {
+
+  const [available, setAvailable] = useState([]);
+  const [booked, setBooked] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const dateInputRef = useRef();
   const fromTimeInputRef = useRef();
   const toTimeInputRef = useRef();
   const capacityInputRef = useRef();
 
-  const lecturehall = [
-    {
-      id: 5,
-      max_capacity: 100,
-      permission_req: 'Yes',
-      status: 'Available',
-      time_from: '3:00PM',
-      time_to: '4:00PM',
+  function bookingHandler(lh_id) { //book the available lt
+    fetch(`http://localhost:5000/lecturehall/available/${lh_id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    {
-      id: 2,
-      max_capacity: 100,
-      permission_req: 'No',
-      status: 'Available',
-      time_from: '1:00PM',
-      time_to: '2:00PM',
-      },
-    {
-      id: 9,
-      max_capacity: 200,
-      permission_req: 'Yes',
-      status: 'Available',
-      time_from: '5:00PM',
-      time_to: '6:00PM',
-      }
-  ]
+      body: JSON.stringify({
+        user_id:1,
+        start: "2008-11-11 13:23:44",
+        end: "2008-11-09 15:45:21",
+        purpose: "testing",
+        status:1
+      })
+    }).then((response) => response.json())
+      .then((data) => setAvailable(data));
+  }
 
-  function submitHandler(e) {
+  function setModalHandler() {
+    setModalIsOpen(false);
+  }
+
+  function submitHandler(e) { //fetch available lt
     e.preventDefault();
+    fetch("http://localhost:5000/lecturehall/available", { //lt available in the time slot
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        capacity: capacityInputRef.current.value,
+        start: "2008-11-11 13:23:44",
+        end: "2008-11-09 15:45:21"
+      })
+    }).then((response) => response.json())
+      .then((data) => setAvailable(data));
+
+    fetch("http://localhost:5000/lecturehall/booked", { //lt booked in the time slot
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        capacity: capacityInputRef.current.value,
+        start: "2008-11-11 13:23:44",
+        end: "2008-11-09 15:45:21"
+      })
+    }).then((response) => response.json())
+      .then((data) => setBooked(data));
   }
 
   return (
     <div>
-      <form class="w-full max-w-8xl	mx-16 my-16" onSubmit={submitHandler}>
+            <form class="w-full max-w-8xl	mx-16 my-16" onSubmit={submitHandler}>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
@@ -72,7 +98,7 @@ export default function AvailableLH() {
         </div>
       </form>
 
-      <div className="flex flex-col mx-16">
+      <div className="flex flex-col mx-16 mb-24">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -115,32 +141,63 @@ export default function AvailableLH() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {lecturehall.map((lt) => (
-                    <tr key={lt.id}>
+                  {available.map((lt) => (
+                    <tr key={lt.lh_id}>
                       <td className="px-3 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">LT-{lt.id}</div>
+                            <div className="text-sm font-medium text-gray-900">LT-{lt.lh_id}</div>
                           </div>
                         </div>
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-500">{lt.max_capacity}</div>
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{lt.permission_req}</td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{lt.time_from}-{lt.time_to}</td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{lt.special_permission_req ? 'Yes' : 'No'}</td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{fromTimeInputRef.current.value + '-' + toTimeInputRef.current.value}</td>
                       <td className="px-3 py-4 whitespace-nowrap">
                         <span className="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          {lt.status}
+                          Available
                         </span>
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 mx-6 hover:text-indigo-900">
+                        <a href="#" className="text-indigo-600 mx-6 hover:text-indigo-900" onClick={() => setModalIsOpen(true)}>
                           Book
                         </a>
                       </td>
                     </tr>
                   ))}
+                  {booked.map((lt) => (
+                    <tr key={lt.lh_id}>
+                      <td className="px-3 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="ml-4">
+                            <div className="text-sm font-medium text-gray-900">LT-{lt.lh_id}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-500">{lt.max_capacity}</div>
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{lt.special_permission_req ? 'Yes' : 'No'}</td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{fromTimeInputRef.current.value + '-' + toTimeInputRef.current.value}</td>
+                      <td className="px-3 py-4 whitespace-nowrap">
+                        <span className="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                          Booked
+                        </span>
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <p className="text-indigo-300 mx-6 ">Book</p>
+                      </td>
+                    </tr>
+                  ))}
+                  {modalIsOpen && (
+                    <Modal
+                      onCancel={setModalHandler}
+                      onConfirm={() => bookingHandler()}
+                    />
+                  )}
+                  {modalIsOpen && <Backdrop onClick={setModalHandler} />}
                 </tbody>
               </table>
             </div>
