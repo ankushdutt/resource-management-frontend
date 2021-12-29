@@ -15,20 +15,26 @@ export default function AvailableLH() {
   const capacityInputRef = useRef();
 
   function bookingHandler(lh_id) { //book the available lt
+
+    const s = (lh_id === 5 || lh_id === 9) ? 2 : 1;
+
     fetch(`http://localhost:5000/lecturehall/available/${lh_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id:1,
+        user_id: 1,
         start: "2008-11-11 13:23:44",
         end: "2008-11-09 15:45:21",
         purpose: "testing",
-        status:1
+        status: s
       })
     }).then((response) => response.json())
-      .then((data) => setAvailable(data));
+      .then((data) => {
+        setAvailable(data);
+        setModalIsOpen(false);
+      });
   }
 
   function setModalHandler() {
@@ -66,31 +72,31 @@ export default function AvailableLH() {
 
   return (
     <div>
-            <form class="w-full max-w-8xl	mx-16 my-16" onSubmit={submitHandler}>
-        <div class="flex flex-wrap -mx-3 mb-6">
-          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+      <form className="w-full max-w-8xl	mx-16 my-16" onSubmit={submitHandler}>
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Date
             </label>
-            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="date" ref={dateInputRef} />
+            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="date" ref={dateInputRef} />
           </div>
-          <div class="w-full md:w-1/5 px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+          <div className="w-full md:w-1/5 px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
               Time From
             </label>
-            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="time" ref={fromTimeInputRef} />
+            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="time" ref={fromTimeInputRef} />
           </div>
-          <div class="w-full md:w-1/5 px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+          <div className="w-full md:w-1/5 px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
               Time To
             </label>
-            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="time" ref={toTimeInputRef} />
+            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="time" ref={toTimeInputRef} />
           </div>
-          <div class="w-full md:w-1/5 px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+          <div className="w-full md:w-1/5 px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
               Required Capacity
             </label>
-            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" ref={capacityInputRef} />
+            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" ref={capacityInputRef} />
           </div>
           <div className="w-full my-5 md:w-auto px-3 bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-4 rounded">
             <button >search</button>
@@ -164,6 +170,13 @@ export default function AvailableLH() {
                         <a href="#" className="text-indigo-600 mx-6 hover:text-indigo-900" onClick={() => setModalIsOpen(true)}>
                           Book
                         </a>
+                        {modalIsOpen && (
+                    <Modal
+                      onCancel={setModalHandler}
+                      onConfirm={() => bookingHandler(lt.lh_id)}
+                    />
+                  )}
+                  {modalIsOpen && <Backdrop onClick={setModalHandler} />}
                       </td>
                     </tr>
                   ))}
@@ -182,8 +195,8 @@ export default function AvailableLH() {
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{lt.special_permission_req ? 'Yes' : 'No'}</td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{fromTimeInputRef.current.value + '-' + toTimeInputRef.current.value}</td>
                       <td className="px-3 py-4 whitespace-nowrap">
-                        <span className="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                          Booked
+                        <span className={lt.booking_status === 1 ? "px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800" : "px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"}>
+                          {lt.booking_status === 1 ? "Booked" : "Pending"}
                         </span>
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -191,13 +204,8 @@ export default function AvailableLH() {
                       </td>
                     </tr>
                   ))}
-                  {modalIsOpen && (
-                    <Modal
-                      onCancel={setModalHandler}
-                      onConfirm={() => bookingHandler()}
-                    />
-                  )}
-                  {modalIsOpen && <Backdrop onClick={setModalHandler} />}
+
+                  
                 </tbody>
               </table>
             </div>
