@@ -18,7 +18,7 @@ export default function AvailableLH() {
 
     const s = (lh_id === 5 || lh_id === 9) ? 2 : 1;
 
-    fetch(`http://localhost:5000/lecturehall/available/${lh_id}`, {
+    fetch(`https://lecture-hall-backend.herokuapp.com/lecturehall/available/${lh_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default function AvailableLH() {
 
   function submitHandler(e) { //fetch available lt
     e.preventDefault();
-    fetch("http://localhost:5000/lecturehall/available", { //lt available in the time slot
+    fetch("https://lecture-hall-backend.herokuapp.com/lecturehall/available", { //lt available in the time slot
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export default function AvailableLH() {
     }).then((response) => response.json())
       .then((data) => setAvailable(data));
 
-    fetch("http://localhost:5000/lecturehall/booked", { //lt booked in the time slot
+    fetch("https://lecture-hall-backend.herokuapp.com/lecturehall/booked", { //lt booked in the time slot
       method: "POST",
       headers: {
         "Content-Type": "application/json",
