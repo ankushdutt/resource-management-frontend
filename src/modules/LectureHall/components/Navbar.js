@@ -7,7 +7,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar({ setIsLoggedIn }) {
+export default function Navbar({ setIsLoggedIn, isAdmin, setIsAdmin }) {
   const [navigation, setNavigation] = useState([
     { name: "Allocated", href: "/lecturehall/allocated", current: true },
     { name: "Available", href: "/lecturehall/available", current: false },
@@ -103,29 +103,31 @@ export default function Navbar({ setIsLoggedIn }) {
                           </a>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              history.push("/lecturehall/admin");
-                              setNavigation(
-                                navigation.map((item) => {
-                                  item.current = false;
-                                  return item;
-                                })
-                              );
-                            }}
-                          >
-                            Admin Dashboard
-                          </a>
-                        )}
-                      </Menu.Item>
+                      {isAdmin && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                history.push("/lecturehall/admin");
+                                setNavigation(
+                                  navigation.map((item) => {
+                                    item.current = false;
+                                    return item;
+                                  })
+                                );
+                              }}
+                            >
+                              Admin Dashboard
+                            </a>
+                          )}
+                        </Menu.Item>
+                      )}
                       <Menu.Item>
                         {({ active }) => (
                           <a
@@ -137,7 +139,9 @@ export default function Navbar({ setIsLoggedIn }) {
                             onClick={(e) => {
                               e.preventDefault();
                               setIsLoggedIn(false);
+                              setIsAdmin(false);
                               localStorage.setItem("isLoggedIn", "false");
+                              localStorage.setItem("isAdmin", "false");
                             }}
                           >
                             Sign out
