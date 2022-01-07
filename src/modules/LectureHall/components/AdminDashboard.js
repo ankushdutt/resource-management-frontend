@@ -3,17 +3,17 @@ import { CSVReader } from "react-papaparse";
 
 export default function AdminDashboard() {
   const buttonRef = useRef();
+  const parsedData = useRef();
+
   const handleOpenDialog = (e) => {
-    // Note that the ref is set async, so it might be null at some point
     if (buttonRef.current) {
       buttonRef.current.open(e);
     }
   };
 
   const handleOnFileLoad = (data) => {
-    console.log("---------------------------");
-    console.log(data);
-    console.log("---------------------------");
+    console.log("On file load", data);
+    parsedData.current = data;
   };
 
   const handleOnError = (err, file, inputElem, reason) => {
@@ -21,28 +21,32 @@ export default function AdminDashboard() {
   };
 
   const handleOnRemoveFile = (data) => {
-    console.log("---------------------------");
-    console.log(data);
-    console.log("---------------------------");
+    console.log("On file remove", data);
+    parsedData.current = null;
   };
 
   const handleRemoveFile = (e) => {
-    // Note that the ref is set async, so it might be null at some point
     if (buttonRef.current) {
       buttonRef.current.removeFile(e);
     }
   };
 
+  const handleSubmit = (e) => {
+    console.log("Submitted");
+    fetch("https://lecture-hall-backend.herokuapp.com/admin/timetable", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(parsedData.current),
+    }).then((data) => {
+      console.log(data);
+    });
+  };
+
   return (
     <div className="w-1/3 m-auto p-2">
-      {/* <div className="m-auto">
-        Upload Time Table CSV
-        <br />
-        <input type="file" />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Allocate from Time Table
-        </button>
-      </div> */}
       <CSVReader
         ref={buttonRef}
         onFileLoad={handleOnFileLoad}
@@ -100,6 +104,18 @@ export default function AdminDashboard() {
               onClick={handleRemoveFile}
             >
               Remove
+            </button>
+            <button
+              style={{
+                borderRadius: 0,
+                marginLeft: 0,
+                marginRight: 0,
+                paddingLeft: 20,
+                paddingRight: 20,
+              }}
+              onClick={handleSubmit}
+            >
+              Submit
             </button>
           </aside>
         )}
