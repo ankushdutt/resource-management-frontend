@@ -21,6 +21,7 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
       console.log(data);
       if (data.status === 200) {
         setIsLoggedIn(true);
+        setIsAdmin(false);
       }
       if (data.status === 201) {
         setIsLoggedIn(true);
