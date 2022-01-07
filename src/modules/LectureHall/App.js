@@ -16,11 +16,20 @@ export default function App() {
     if (localStorage.getItem("isLoggedIn") === "true") {
       setIsLoggedIn(true);
     }
+    if (localStorage.getItem("isAdmin") === "true") {
+      setIsAdmin(true);
+    }
   }, []);
 
   return (
     <div>
-      {isLoggedIn && <Navbar setIsLoggedIn={setIsLoggedIn} />}
+      {isLoggedIn && (
+        <Navbar
+          setIsLoggedIn={setIsLoggedIn}
+          setIsAdmin={setIsAdmin}
+          isAdmin={isAdmin}
+        />
+      )}
       <Switch>
         <Route exact path="/lecturehall">
           {isLoggedIn ? (
@@ -49,11 +58,7 @@ export default function App() {
           {isLoggedIn ? <Profile /> : <Redirect to="/lecturehall/login" />}
         </Route>
         <Route path="/lecturehall/admin">
-          {isLoggedIn ? (
-            <AdminDashboard />
-          ) : (
-            <Redirect to="/lecturehall/login" />
-          )}
+          {isAdmin ? <AdminDashboard /> : <Redirect to="/lecturehall/login" />}
         </Route>
       </Switch>
     </div>
