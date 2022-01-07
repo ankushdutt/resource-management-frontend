@@ -10,6 +10,7 @@ import AdminDashboard from "./components/AdminDashboard";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") === "true") {
@@ -30,7 +31,7 @@ export default function App() {
         </Route>
         <Route path="/lecturehall/login">
           {!isLoggedIn ? (
-            <Login setIsLoggedIn={setIsLoggedIn} />
+            <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
           ) : (
             <Redirect to="/lecturehall/allocated" />
           )}
