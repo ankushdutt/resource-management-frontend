@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom";
 
 
 export default function Profile() {
-  
+
 
   const history = useHistory();
   const handleRoute = () =>{ 
-    history.push("/UpdateEmail");
+    history.push("/lecturehall/profile/updateemail");
   }
   
   return (
