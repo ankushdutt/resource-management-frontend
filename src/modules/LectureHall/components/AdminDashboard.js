@@ -1,9 +1,11 @@
 import { useRef } from "react";
 import { CSVReader } from "react-papaparse";
+import { useHistory } from "react-router-dom";
 
 export default function AdminDashboard() {
   const buttonRef = useRef();
   const parsedData = useRef();
+  const history = useHistory();
 
   const handleOpenDialog = (e) => {
     if (buttonRef.current) {
@@ -122,11 +124,12 @@ export default function AdminDashboard() {
       </CSVReader>
       <button
         className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3"
-        onClick={() => {
-          console.log("1");
+        onClick={(e) => {
+          e.preventDefault();
+          history.push("/lecturehall/admin/delete-user")
         }}
       >
-        Add, Update and Delete User Accounts
+        Delete User Accounts
       </button>
       <button
         className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3"
