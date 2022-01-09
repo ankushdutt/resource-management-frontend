@@ -6,7 +6,7 @@ export default function Profile() {
 
   const history = useHistory();
   const handleRoute = () =>{ 
-    history.push("/Lecturehall/Profile/UpdateEmail");
+    history.push("/lecturehall/profile/UpdateEmail");
   }
   
   return (
