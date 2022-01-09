@@ -13,11 +13,7 @@ export default function Profile() {
     <div className="w-1/3 m-auto p-2">
       <button
         className="w-full bg-blue-500 rounded p-3 m-3"
-        onClick={() => {
-          {handleRoute}
-          // Update email
-        }}
-      >
+        onClick= {handleRoute}>
         Update Email
       </button>
       <button
