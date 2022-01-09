@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
 import AdminDashboard from "./components/AdminDashboard";
+import UpdateEmail from "./components/UpdateEmail";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
