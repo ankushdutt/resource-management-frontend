@@ -7,7 +7,8 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
 import AdminDashboard from "./components/AdminDashboard";
-import DeleteUser from "./components/DeleteUser";
+import DeleteUser from "./components/AdminDashboard/DeleteUser";
+import UpdateLH from "./components/AdminDashboard/UpdateLH";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,7 +60,10 @@ export default function App() {
           {isLoggedIn ? <Profile /> : <Redirect to="/lecturehall/login" />}
         </Route>
         <Route path="/lecturehall/admin/delete-user">
-          {isAdmin ? <DeleteUser/> : <Redirect to="/lecturehall/login" />}
+          {isAdmin ? <DeleteUser /> : <Redirect to="/lecturehall/login" />}
+        </Route>
+        <Route path="/lecturehall/admin/update-lh">
+          {isAdmin ? <UpdateLH /> : <Redirect to="/lecturehall/login" />}
         </Route>
         <Route exact path="/lecturehall/admin">
           {isAdmin ? <AdminDashboard /> : <Redirect to="/lecturehall/login" />}
