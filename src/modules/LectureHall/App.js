@@ -10,6 +10,7 @@ import AdminDashboard from "./components/AdminDashboard";
 import DeleteUser from "./components/AdminDashboard/DeleteUser";
 import UpdateLH from "./components/AdminDashboard/UpdateLH";
 import UpdateEmail from "./components/UpdateEmail";
+import SignUp from "./components/SignUp";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,6 +54,9 @@ export default function App() {
             <Redirect to="/lecturehall/allocated" />
           )}
         </Route>
+        <Route path="/lecturehall/signup">
+          <SignUp />
+        </Route>
         <Route path="/lecturehall/all">
           {isLoggedIn ? <ShowAllLH /> : <Redirect to="/lecturehall/login" />}
         </Route>
@@ -64,7 +68,11 @@ export default function App() {
           )}
         </Route>
         <Route path="/lecturehall/allocated">
-          {isLoggedIn ? <AllocatedLH /> : <Redirect to="/lecturehall/login" />}
+          {isLoggedIn ? (
+            <AllocatedLH user={user} />
+          ) : (
+            <Redirect to="/lecturehall/login" />
+          )}
         </Route>
         <Route path="/lecturehall/profile">
           {isLoggedIn ? <Profile /> : <Redirect to="/lecturehall/login" />}

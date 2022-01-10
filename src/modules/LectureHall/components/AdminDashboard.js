@@ -155,7 +155,7 @@ export default function AdminDashboard() {
           console.log("4");
         }}
       >
-        See and Edit Time Table Allocations or Bookings
+        See Bookings
       </button>
     </div>
   );
