@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Modal from "./Modal";
 import Backdrop from "./Backdrop";
 import "./Lecturehall.css";
@@ -17,6 +17,7 @@ export default function AvailableLH() {
   function bookingHandler(lh_id) { //book the available lt
 
     const s = (lh_id === 5 || lh_id === 9) ? 2 : 1;
+    setModalIsOpen(false);
 
     fetch(`https://lecture-hall-backend.herokuapp.com/lecturehall/available/${lh_id}`, {
       method: "POST",
@@ -33,7 +34,7 @@ export default function AvailableLH() {
     }).then((response) => response.json())
       .then((data) => {
         setAvailable(data);
-        setModalIsOpen(false);
+        // setModalIsOpen(false);
       });
   }
 
@@ -41,7 +42,7 @@ export default function AvailableLH() {
     setModalIsOpen(false);
   }
 
-  function submitHandler(e) { //fetch available lt
+  async function submitHandler(e) { //fetch available lt
     e.preventDefault();
     fetch("https://lecture-hall-backend.herokuapp.com/lecturehall/available", { //lt available in the time slot
       method: "POST",
