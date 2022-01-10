@@ -58,7 +58,7 @@ export default function App() {
         <Route path="/lecturehall/profile">
           {isLoggedIn ? <Profile /> : <Redirect to="/lecturehall/login" />}
         </Route>
-        <Route path="/lecturehall/profile/updateemail">
+        <Route path="/UpdateEmail">
             {isLoggedIn ? <UpdateEmail /> : <Redirect to="/lecturehall/login" />}
         </Route>
         <Route path="/lecturehall/admin">

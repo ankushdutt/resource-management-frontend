@@ -1,61 +1,53 @@
 import { useRef } from "react";
 export default function UpdateEmail(){
-    /*const emailInputRef = useRef();
-     const userInputRef = useRef();
-  
-    var oldE=document.getElementById("oldE").value;
-    var newE=document.getElementById("newE").value;
-    var confirmE =document.getElementById("confirmE").value;
-
-    if(oldE!=""&&newE!=""&&confirmE!="")
-    {
-      if(oldE!=newE)
-      {
-        if(newE==confirmE)
-         {
-          return true;
-         }
-         else
-          {
-            alert("Confirm EMAIL is not same as you new email.");
-            return false;
-          }
-      }
-      else
-     {
-      alert(" This Is Your Old Email,Please Provide A New Email");
-      return false;
-     }
-    }
-    else
-    {
-     alert("All Fields Are Required");
-     return false;
-    }
-    /*const handleEmail = async (e) => {
+    const oldemailInputRef = useRef();
+    const newemailInputRef = useRef();
+    const confemailInputRef = useRef();
+    const handleEmail = async (e) => {
         e.preventDefault();
-        fetch("https://lecture-hall-backend.herokuapp.com/lecturehall/profile", {
+        /*fetch("http://localhost:5000/lecturehall/profile/searchemail", {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            user_id: userInputRef.current.value,
-            email: emailInputRef.current.value,
+            email: oldemailInputRef.current.value,
           }),
-        }).then((data) => {
+        }).then((response) => {
+            response.json()
+        })
+          .then((data) => {
           console.log(data);
-          if (data.status === 200) {
-            setIsLoggedIn(true);
-            setIsAdmin(false);
-          }
-          if (data.status === 201) {
-            setIsLoggedIn(true);
-            setIsAdmin(true);
-          }
+        });*/
+        if(newemailInputRef.current.value===confemailInputRef.current.value){
+        fetch("http://localhost:5000/lecturehall/profile/updateemail", {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            oldemail: oldemailInputRef.current.value,
+            newemail: newemailInputRef.current.value,
+          }),
+        })
+          .then((data) => {
+            console.log(data);
+            if (data.status===200) {
+               alert("Successfully updated");
+              }
+            else{
+                alert("Email id not found");
+            }
+              
         });
-      };*/
+      }
+      else{
+        alert("Confirm email and new email are not same");
+    }
+    };
+      
       return(
         <div className="w-full max-w-xs m-auto mt-64">
         <form
@@ -70,7 +62,7 @@ export default function UpdateEmail(){
               id="oldE"
               type="email"
               placeholder="email"
-              //ref={emailInputRef}
+              ref={oldemailInputRef}
             />
           </div>
           <div className="mb-6">
@@ -82,7 +74,7 @@ export default function UpdateEmail(){
               id="newE"
               type="email"
               placeholder="email"
-              //ref={passInputRef}
+              ref={newemailInputRef}
             />
             <p className="text-red-500 text-xs italic">
               Please enter new email.
@@ -97,7 +89,7 @@ export default function UpdateEmail(){
               id="confirmE"
               type="email"
               placeholder="email"
-              //ref={passInputRef}
+              ref={confemailInputRef}
             />
             <p className="text-red-500 text-xs italic">
               Please confirm new email id.
@@ -107,6 +99,7 @@ export default function UpdateEmail(){
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
+              onClick={handleEmail}
             >
               Change Email
             </button>
@@ -114,5 +107,5 @@ export default function UpdateEmail(){
         </form>
       </div>
       );
-
+      
 }
