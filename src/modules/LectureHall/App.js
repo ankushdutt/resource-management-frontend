@@ -52,7 +52,7 @@ export default function App() {
               setUser={setUser}
             />
           ) : (
-            <Redirect to="/lecturehall/allocated" />
+            <Redirect to="/lecturehall/available" />
           )}
         </Route>
         <Route path="/lecturehall/signup">

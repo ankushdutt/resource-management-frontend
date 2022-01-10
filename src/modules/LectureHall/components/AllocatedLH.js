@@ -22,9 +22,7 @@ export default function AllocatedLH({ user }) {
   }
 
   // Fetch allocated lecture halls of current user from server
-  useEffect(() => {
-    setTimeout(() => fetchAllocatedLH(), 1000);
-  }, []);
+  useEffect(() => fetchAllocatedLH(), []);
 
   const fetchAllocatedLH = () => {
     fetch(
