@@ -10,7 +10,6 @@ import AdminDashboard from "./components/AdminDashboard";
 import DeleteUser from "./components/AdminDashboard/DeleteUser";
 import UpdateLH from "./components/AdminDashboard/UpdateLH";
 import UpdateEmail from "./components/UpdateEmail";
-import DeleteUser from "./components/DeleteUser";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
