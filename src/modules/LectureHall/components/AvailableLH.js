@@ -26,7 +26,7 @@ export default function AvailableLH({user}) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: user.user_id,
+        user_id: user[0].user_id,
         start: dateInputRef.current.value + " " + fromTimeInputRef.current.value + ":00",
         end: dateInputRef.current.value + " " + toTimeInputRef.current.value + ":00",
         purpose: "testing",
@@ -34,16 +34,15 @@ export default function AvailableLH({user}) {
       })
     }).then((response) => response.json())
       .then((data) => {
-        // setAvailable(data);
-        // setModalIsOpen(false);
-
-        // submitHandler();
+        setIsLoading(true)
       });
   }
 
   function setModalHandler() {
     setModalIsOpen(false);
   }
+
+  // useEffect(() => submitHandler(),[available,booked])
 
   function submitHandler(e) { //fetch available lt
     e.preventDefault();
@@ -78,6 +77,7 @@ export default function AvailableLH({user}) {
   return (
     <div>
       {console.log(user)}
+
       <form className="w-full max-w-8xl	mx-16 my-16" onSubmit={submitHandler}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/5 px-3 mb-6 md:mb-0">
@@ -153,7 +153,7 @@ export default function AvailableLH({user}) {
                   </tr>
                 </thead>
                 {isLoading  ? (
-                <div>Fetching lecture halls data from server...</div>
+                <div>Available Lecture halls will be displayed here.</div>
                 ) : (
                 <tbody className="bg-white divide-y divide-gray-200">
                   {available.map((lt) => (
@@ -176,16 +176,16 @@ export default function AvailableLH({user}) {
                         </span>
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 mx-6 hover:text-indigo-900" onClick={() => setModalIsOpen(true)}>
+                        <a href="#" className="text-indigo-600 mx-6 hover:text-indigo-900" onClick={() => bookingHandler(lt.lh_id)}>
                           Book
                         </a>
-                        {modalIsOpen && (
+                        {/* {modalIsOpen && (
                     <Modal
                       onCancel={setModalHandler}
                       onConfirm={() => bookingHandler(lt.lh_id)}
                     />
-                  )}
-                  {modalIsOpen && <Backdrop onClick={setModalHandler} />}
+                  )} */}
+                  {/* {modalIsOpen && <Backdrop onClick={setModalHandler} />} */}
                       </td>
                     </tr>
                   ))}

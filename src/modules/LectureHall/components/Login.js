@@ -20,7 +20,7 @@ export default function Login({ setIsLoggedIn, setIsAdmin, setUser }) {
     }).then((response) => response.json())
     .then((data) => {
       console.log(data);
-      if (data.designation === 'admin') {
+      if (data[0].designation === "admin") {
         setIsLoggedIn(true);
         setIsAdmin(true);
       }
