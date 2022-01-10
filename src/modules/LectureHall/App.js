@@ -9,6 +9,7 @@ import Profile from "./components/Profile";
 import AdminDashboard from "./components/AdminDashboard";
 import DeleteUser from "./components/AdminDashboard/DeleteUser";
 import UpdateLH from "./components/AdminDashboard/UpdateLH";
+import PendingAllocation from "./components/AdminDashboard/PendingAllocation";
 import UpdateEmail from "./components/UpdateEmail";
 import SignUp from "./components/SignUp";
 
@@ -85,6 +86,13 @@ export default function App() {
         </Route>
         <Route path="/lecturehall/admin/update-lh">
           {isAdmin ? <UpdateLH /> : <Redirect to="/lecturehall/login" />}
+        </Route>
+        <Route path="/lecturehall/admin/pendingalloc">
+          {isAdmin ? (
+            <PendingAllocation />
+          ) : (
+            <Redirect to="/lecturehall/login" />
+          )}
         </Route>
         <Route exact path="/lecturehall/admin">
           {isAdmin ? <AdminDashboard /> : <Redirect to="/lecturehall/login" />}

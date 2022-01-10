@@ -139,12 +139,13 @@ export default function AdminDashboard() {
           history.push("/lecturehall/admin/update-lh");
         }}
       >
-        Add, Update and Delete Lecture Halls
+        Delete Lecture Halls
       </button>
       <button
         className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3"
-        onClick={() => {
-          console.log("3");
+        onClick={(e) => {
+          e.preventDefault();
+          history.push("/lecturehall/admin/pendingalloc");
         }}
       >
         Pending Allocation Requests

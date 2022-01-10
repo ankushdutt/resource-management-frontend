@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from "react";
 
-function UpdateLH() {
-  const [lh, setLH] = useState([]);
+function PendingAllocation() {
+  const [alloc, setAlloc] = useState([]);
 
   const fetchServerData = async () => {
-    fetch(`https://lecture-hall-backend.herokuapp.com/lecturehall/all`, {
+    fetch(`https://lecture-hall-backend.herokuapp.com/admin/pending`, {
       method: "GET",
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setLH(data);
+        setAlloc(data);
       });
   };
 
-  const deleteLH = async (user_id) => {
-    const id = user_id.toString();
-    fetch(`https://lecture-hall-backend.herokuapp.com/lecturehall/` + id, {
-      method: "DELETE",
-    }).then((response) => console.log(response));
+  const handleApprove = (booking_id) => {
+    fetch(
+      `https://lecture-hall-backend.herokuapp.com/admin/approve/${booking_id}`,
+      {
+        method: "POST",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        fetchServerData();
+      });
   };
 
   useEffect(() => fetchServerData(), []);
@@ -37,19 +44,19 @@ function UpdateLH() {
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
+                      Booking ID
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
                       Lecture Hall
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Maximum Capacity
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Director Permission Required
+                      User ID
                     </th>
                     <th
                       scope="col"
@@ -60,8 +67,17 @@ function UpdateLH() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {lh.map((lh, i) => (
+                  {alloc.map((lh, i) => (
                     <tr key={i}>
+                      <td className="px-3 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="ml-4">
+                            <div className="text-sm font-medium text-gray-900">
+                              {lh.booking_id}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                       <td className="px-3 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="ml-4">
@@ -75,16 +91,7 @@ function UpdateLH() {
                         <div className="flex items-center">
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">
-                              {lh.max_capacity}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-3 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {lh.special_permission_req}
+                              {lh.user_id}
                             </div>
                           </div>
                         </div>
@@ -94,16 +101,10 @@ function UpdateLH() {
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">
                               <button
-                                className="text-red-600 mx-6 hover:text-red-900"
-                                onClick={() => deleteLH(lh.lh_id)}
+                                className="text-green-600 mx-6 hover:text-green-900"
+                                onClick={() => handleApprove(lh.booking_id)}
                               >
-                                Remove
-                              </button>
-                              <button
-                                className="text-indigo-600 mx-6 hover:text-indigo-900"
-                                //  onClick={() => setModalIsOpen(true)}
-                              >
-                                Update
+                                Approve
                               </button>
                             </div>
                           </div>
@@ -121,4 +122,4 @@ function UpdateLH() {
   );
 }
 
-export default UpdateLH;
+export default PendingAllocation;
