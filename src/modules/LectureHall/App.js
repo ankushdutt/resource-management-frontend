@@ -13,6 +13,7 @@ import DeleteUser from "./components/DeleteUser";
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") === "true") {
@@ -42,7 +43,7 @@ export default function App() {
         </Route>
         <Route path="/lecturehall/login">
           {!isLoggedIn ? (
-            <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
+            <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} setUser={setUser}/>
           ) : (
             <Redirect to="/lecturehall/allocated" />
           )}
@@ -51,7 +52,7 @@ export default function App() {
           {isLoggedIn ? <ShowAllLH /> : <Redirect to="/lecturehall/login" />}
         </Route>
         <Route path="/lecturehall/available">
-          {isLoggedIn ? <AvailableLH /> : <Redirect to="/lecturehall/login" />}
+          {isLoggedIn ? <AvailableLH user={user}/> : <Redirect to="/lecturehall/login" />}
         </Route>
         <Route path="/lecturehall/allocated">
           {isLoggedIn ? <AllocatedLH /> : <Redirect to="/lecturehall/login" />}
