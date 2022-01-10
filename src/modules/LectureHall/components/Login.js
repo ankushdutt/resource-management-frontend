@@ -1,7 +1,7 @@
 import { Redirect } from "react-router";
 import { useRef } from "react";
 
-export default function Login({ setIsLoggedIn, setIsAdmin }) {
+export default function Login({ setIsLoggedIn, setIsAdmin, setUser }) {
   const emailInputRef = useRef();
   const passInputRef = useRef();
 
@@ -17,16 +17,18 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
         username: emailInputRef.current.value,
         password: passInputRef.current.value,
       }),
-    }).then((data) => {
+    }).then((response) => response.json())
+    .then((data) => {
       console.log(data);
-      if (data.status === 200) {
-        setIsLoggedIn(true);
-        setIsAdmin(false);
-      }
-      if (data.status === 201) {
+      if (data.designation === 'admin') {
         setIsLoggedIn(true);
         setIsAdmin(true);
       }
+      else {
+        setIsLoggedIn(true);
+        setIsAdmin(false);
+      }
+      setUser(data);
     });
   };
 
