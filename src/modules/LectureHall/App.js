@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
 import AdminDashboard from "./components/AdminDashboard";
+import UpdateEmail from "./components/UpdateEmail";
 import DeleteUser from "./components/DeleteUser";
 
 export default function App() {
@@ -57,6 +58,9 @@ export default function App() {
         </Route>
         <Route path="/lecturehall/profile">
           {isLoggedIn ? <Profile /> : <Redirect to="/lecturehall/login" />}
+        </Route>
+        <Route path="/UpdateEmail">
+            {isLoggedIn ? <UpdateEmail /> : <Redirect to="/lecturehall/login" />}
         </Route>
         <Route path="/lecturehall/admin/delete-user">
           {isAdmin ? <DeleteUser/> : <Redirect to="/lecturehall/login" />}
