@@ -8,12 +8,16 @@ export default function AllocatedLH({ user }) {
   const [allocatedLH, setAllocatedLH] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [toDel, setToDel] = useState();
-  // const didMount = useRef(false);
 
   function deleteHandler(id) {
-    setAllocatedLH(allocatedLH.filter((lh) => lh !== id));
-    setToDel(id);
+    setAllocatedLH(allocatedLH.filter((lh) => lh.booking_id !== id));
+    fetch(`https://lecture-hall-backend.herokuapp.com/allocation/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
     setModalIsOpen(false);
   }
 
@@ -112,9 +116,15 @@ export default function AllocatedLH({ user }) {
                             {lh.alloc_end}
                           </td>
                           <td className="px-3 py-4 whitespace-nowrap">
-                            <span className="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                              {lh.booking_status == 1 ? "Booked" : "Pending"}
-                            </span>
+                            {lh.booking_status == 1 ? (
+                              <span className="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                Booked
+                              </span>
+                            ) : (
+                              <span className="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                Pending
+                              </span>
+                            )}
                           </td>
                           <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button
@@ -126,7 +136,7 @@ export default function AllocatedLH({ user }) {
                             {modalIsOpen && (
                               <Modal
                                 onCancel={setModalHandler}
-                                onConfirm={() => deleteHandler(lh.lh_id)}
+                                onConfirm={() => deleteHandler(lh.booking_id)}
                               />
                             )}
                             {modalIsOpen && (
