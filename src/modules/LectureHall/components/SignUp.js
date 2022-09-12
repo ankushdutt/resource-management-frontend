@@ -1,148 +1,119 @@
-import { useState } from "react";
-export default function SignUp() {
-  // States for registration
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [designation, setDesignation] = useState("");
+import { useHistory } from "react-router-dom";
+import { useRef } from "react";
 
-  // States for checking the errors
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(false);
+export default function Login({ setIsLoggedIn, setIsAdmin, setUser }) {
+  const emailInputRef = useRef();
+  const passInputRef = useRef();
+  const nameInputRef = useRef();
+  const designationInputRef = useRef();
+  const mobile_noInputRef = useRef();
 
-  // Handling the name change
-  const handleName = (e) => {
-    setName(e.target.value);
-    setSubmitted(false);
-  };
+  const history = useHistory();
 
-  // Handling the email change
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-    setSubmitted(false);
-  };
-
-  // Handling the password change
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-    setSubmitted(false);
-  };
-
-  //Handling the mobile number change
-  const handleMobile = (e) => {
-    setMobile(e.target.value);
-    setSubmitted(false);
-  };
-
-  //Handling the Designation change
-  const handleDesignation = (e) => {
-    setDesignation(e.target.value);
-    setSubmitted(false);
-  };
-
-  // Handling the form submission
-  const handleSubmit = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    if (
-      name === "" ||
-      email === "" ||
-      password === "" ||
-      mobile === "" ||
-      designation === ""
-    ) {
-      setError(true);
-    } else {
-      setSubmitted(true);
-      setError(false);
-    }
-  };
-
-  // Showing success message
-  const successMessage = () => {
-    return (
-      <div
-        className="success"
-        style={{
-          display: submitted ? "" : "none",
-        }}
-      >
-        <h1>User {name} Successfully registered!!</h1>
-      </div>
-    );
-  };
-
-  // Showing error message if error is true
-  const errorMessage = () => {
-    return (
-      <div
-        className="error"
-        style={{
-          display: error ? "" : "none",
-        }}
-      >
-        <h1>Please enter all the fields</h1>
-      </div>
-    );
+    fetch("https://lecture-hall-backend.herokuapp.com/signup", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailInputRef.current.value,
+        password: passInputRef.current.value,
+        name: nameInputRef.current.value,
+        designation: designationInputRef.current.value,
+        mobile_no: mobile_noInputRef.current.value,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data[0].designation === "admin") {
+          setIsLoggedIn(true);
+          setIsAdmin(true);
+        } else {
+          setIsLoggedIn(true);
+          setIsAdmin(false);
+        }
+        setUser(data);
+      });
   };
 
   return (
-    <div className="form">
-      <div>
-        <h1>User Registration</h1>
-      </div>
-
-      {/* Calling to the methods */}
-      <div className="messages">
-        {errorMessage()}
-        {successMessage()}
-      </div>
-
-      <form>
-        {/* Labels and inputs for form data */}
-        <label className="label">Name</label>
-        <input
-          onChange={handleName}
-          className="input"
-          value={name}
-          type="text"
-        />
-
-        <label className="label">Email</label>
-        <input
-          onChange={handleEmail}
-          className="input"
-          value={email}
-          type="email"
-        />
-
-        <label className="label">Password</label>
-        <input
-          onChange={handlePassword}
-          className="input"
-          value={password}
-          type="password"
-        />
-
-        <label className="label">Mobile</label>
-        <input
-          onChange={handleMobile}
-          className="input"
-          value={mobile}
-          type="text"
-        />
-
-        <label className="label">Designation</label>
-        <input
-          onChange={handleDesignation}
-          className="input"
-          value={designation}
-          type="text"
-        />
-
-        <button onClick={handleSubmit} className="btn" type="submit">
-          Submit
-        </button>
+    <div className="w-full max-w-sm m-auto mt-32">
+      <form
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        onSubmit={handleSignUp}
+      >
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Email ID
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="email"
+            type="email"
+            placeholder="email"
+            ref={emailInputRef}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Password
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            type="password"
+            placeholder="******************"
+            ref={passInputRef}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Bob"
+            ref={emailInputRef}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Designation
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="designation"
+            type="text"
+            placeholder="Professor"
+            ref={emailInputRef}
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Mobile No.
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="mobile_no"
+            type="text"
+            placeholder="987654321"
+            ref={emailInputRef}
+          />
+        </div>
+        <div className="flex items-center justify-between">
+          <button
+            className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-3 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Sign Up
+          </button>
+        </div>
       </form>
     </div>
   );

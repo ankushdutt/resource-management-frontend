@@ -1,6 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import Modal from "./Modal";
-import Backdrop from "./Backdrop";
 import "./Lecturehall.css";
 
 export default function AvailableLH({ user }) {
